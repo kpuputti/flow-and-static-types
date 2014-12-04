@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Conference headline</title>
+    <title>Learning Flow by annotating ES6 Promises</title>
     <meta name="description" content="Conference headline">
     <meta name="author" content="Your Name">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="css/theme/futurice.css" id="theme">
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
+    <style>
+      .align-center { text-align: center; }
+    </style>
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
       if( window.location.search.match( /print-pdf/gi ) ) {
@@ -34,17 +37,128 @@
       <div class="slides">
         <section data-background="img/bg01.png" class="futurice-front1">
           <img class="futulogo" src="img/futulogo.png">
-          <h1>Conference headline.</h1>
-          Your small headline here.
-          October / 2015
-        </section>
-
-        <section data-background="img/bg02.png" class="futurice-front1">
-          <h2>Your headline</h2>
+          <h1>Learning Flow</h1>
+          <p>by annotating ES6 Promises</p>
+          <p style="color: #aaa; margin-top: 1em;">Frontend Weeklies, 2014-12-05</p>
         </section>
 
         <section data-background="img/bg03.png" class="futurice-front1">
-          <h2 style="color:white">Your headline</h2>
+          <h2 style="color:white">Background</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <ul>
+            <li>We are sloppy programmers</li>
+            <li>We work with weak types and language quirks</li>
+            <li>We rely on tools and conventions to keep our sanity</li>
+            <li>We hate writing documentation</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <p>Maintaining large JavaScript codebases takes effort</p>
+          <ul style="margin-top:1em">
+            <li>Lots of stupid unit tests</li>
+            <li>Extensive code reviews</li>
+            <li>Careful concentration on conventions</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg03.png" class="futurice-front1">
+          <h2 style="color:white">Static Types</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Dart</h2>
+          <ul>
+            <li></li>
+            <li><a href="https://www.dartlang.org/">dartlang.org</a></li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>AtScript</h2>
+          <ul>
+            <li></li>
+            <li><a href=""></a></li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>TypeScript</h2>
+          <ul>
+            <li>JavaScript superset (aiming to be superset of ES6 in 2.0)</li>
+            <li>(Optional) type annotations</li>
+            <li>Generics</li>
+            <li>Interfaces/structural types</li>
+            <li>OO stuff</li>
+            <li>.d.ts files</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code class="typescript">
+interface Person {
+    firstname: string;
+    lastname: string;
+}
+
+function greeter(person : Person) {
+    return "Hello, " + person.firstname + " " + person.lastname;
+}
+
+var user = {firstname: "Jane", lastname: "User"};
+
+document.body.innerHTML = greeter(user);</code></pre>
+          <p class="align-center"><a href="http://www.typescriptlang.org/Tutorial">www.typescriptlang.org/Tutorial</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>.d.ts files</h2>
+          <pre><code class="typescript">declare module Rx {
+  export interface Observable&lt;T&gt; {
+    (dueTime: Date, scheduler?: IScheduler): Observable&lt;T&gt;;
+    delay(dueTime: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    throttle(dueTime: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeInterval(scheduler?: IScheduler): Observable&lt;TimeInterval&lt;T&gt;&gt;;
+    timestamp(scheduler?: IScheduler): Observable&lt;Timestamp&lt;T&gt;&gt;;
+    sample(interval: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    sample&lt;TSample&gt;(sampler: Observable&lt;TSample&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeout(dueTime: Date, other?: Observable&lt;T&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeout(dueTime: number, other?: Observable&lt;T&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+  }
+}</code></pre>
+          <p class="align-center"><a href="http://definitelytyped.org/">definitelytyped.org</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <blockquote cite="http://baishakhir.github.io/uploads/fse2014-lang_study.pdf">
+            "However, in practice, we notice that developers often—for
+             50% of all variables—use the `any` type, thus making
+             TypeScript dynamic and weak"
+          </blockquote>
+          <p style="text-align:center;font-size:0.8em">
+            <a href="http://baishakhir.github.io/uploads/fse2014-lang_study.pdf">baishakhir.github.io/uploads/fse2014-lang_study.pdf</a>
+          </p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>by Facebook</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
         </section>
 
         <section data-background="img/bg04.png" class="futurice-front1">
@@ -64,7 +178,8 @@
         </section>
 
         <section data-background="img/bg08.png" class="futurice-front1">
-          <h2 style="color:white">Your headline</h2>
+          <h2 class="align-center"style="color:white">Thanks!</h2>
+          <p class="align-center"><a href="https://twitter.com/kpuputti">@kpuputti</a></p>
         </section>
 
       </div>
@@ -91,8 +206,8 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
           { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          //{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          //{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
           { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
           { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
           { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
