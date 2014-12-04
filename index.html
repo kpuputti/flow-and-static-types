@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Learning Flow by annotating ES6 Promises</title>
+    <title>Flow and static types for JavaScript</title>
     <meta name="description" content="Conference headline">
     <meta name="author" content="Your Name">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,6 +13,7 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
     <style>
+      li { height: auto; line-height: 1.4; margin-bottom: 0.5em !important; }
       .align-center { text-align: center; }
     </style>
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -37,8 +38,8 @@
       <div class="slides">
         <section data-background="img/bg01.png" class="futurice-front1">
           <img class="futulogo" src="img/futulogo.png">
-          <h1>Learning Flow</h1>
-          <p>by annotating ES6 Promises</p>
+          <h1>Flow</h1>
+          <p>and static types for JavaScript</p>
           <p style="color: #aaa; margin-top: 1em;">Frontend Weeklies, 2014-12-05</p>
         </section>
 
@@ -60,7 +61,7 @@
           <ul style="margin-top:1em">
             <li>Lots of stupid unit tests</li>
             <li>Extensive code reviews</li>
-            <li>Careful concentration on conventions</li>
+            <li>Meticulous focus on conventions</li>
           </ul>
         </section>
 
@@ -74,9 +75,9 @@
           <ul>
             <li>OO</li>
             <li>Optional static types</li>
-            <li>Checked/Production mode to toggle runtime checking</li>
+            <li>Checked/production mode to toggle runtime checking</li>
             <li>Generics</li>
-            <li>Compile to JS, run in Dartium, or use Dart VM</li>
+            <li>Compile to JS, run in Dartium, or use in Dart VM</li>
             <li>Futures, Streams</li>
             <li>async/await (!)</li>
           </ul>
@@ -176,11 +177,107 @@ document.body.innerHTML = greeter(user);</code></pre>
         <section data-background="img/bg02.png" class="futurice-front1">
           <h2>Flow</h2>
           <ul>
-            <li>by Facebook</li>
+            <li>JavaScript type checker</li>
+            <li>Built in OCaml (Steve Yegge must be smiling)</li>
+            <li>Built to scale to large codebases</li>
+            <li>Focus on type inference</li>
+            <li>Gradual type system</li>
+            <li>jsx compiler used for type erasure (i.e. only compile time type checking)</li>
+            <li>Attempts to be close to the normal JS workflow</li>
           </ul>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>/* @flow */
+
+function foo(x) {
+  return x * 10;
+}
+
+foo('Hello, world!');</code></pre>
+          <pre><code>$> cd flow/examples/01_HelloWorld
+$> flow check</code></pre>
+          <pre><code>01_HelloWorld/hello.js:7:5,17: string
+This type is incompatible with
+  01_HelloWorld/hello.js:4:10,13: number</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Optional (except in module exports) TypeScript type annotations</li>
+            <li>Tuples</li>
+            <li>Structural types</li>
+            <li>Subtyping (extends, prototypes)</li>
+            <li>Polymorphic classes and function (generics)</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Union types</li>
+            <li>Maybe/nullable types</li>
+            <li>Declarations (not compatible with .d.ts files ATM)</li>
+            <li>Supports React's propTypes</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Generics</h2>
+          <pre><code>function id&lt;T&gt;(x: T): T {
+  return x;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+var o = null;
+print(o.x);</code></pre>
+          <pre><code>file.js:3:7,9: property x
+Property cannot be accessed on possibly null value
+  file.js:2:9,12: null</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+
+function length(x) {
+  return x.length;
+}
+
+var total = length('Hello') + length(null);</code></pre>
+          <pre><code>03_Null/nulls.js:4:10,17: property length
+Property cannot be accessed on possibly null value
+  03_Null/nulls.js:7:38,41: null</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+
+function length(x) {
+  if (x !== null) {
+    return x.length;
+  } else {
+    return 0;
+  }
+}
+
+var total = length('Hello') + length(null);</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Think of it as next generation linter</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code></code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
@@ -205,7 +302,39 @@ document.body.innerHTML = greeter(user);</code></pre>
         </section>
 
         <section data-background="img/bg07.png" class="futurice-front1">
-          <h2>Your headline</h2>
+          <h2 style="color:white">Your headline</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Summary</h2>
+          <ul>
+            <li>Early warnings are good</li>
+            <li>Static types help in maintaining and refactoring code</li>
+            <li>Up-to-date documentation</li>
+            <li>Avoiding stupid unit tests</li>
+            <li>Good type inference is crucial for adoption</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Future</h2>
+          <ul>
+            <li>Linting taken to the next level</li>
+            <li>Optional type annotations are considered for ES7, but introducing them is very difficult</li>
+            <li>AtScript, TypeScript, and Flow developers are working together \o/</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="https://www.dartlang.org/">www.dartlang.org</a></li>
+            <li><a href="http://www.typescriptlang.org/">www.typescriptlang.org</a></li>
+            <li><a href="http://flowtype.org/">http://flowtype.org/</a></li>
+            <li><a href="http://www.2ality.com/2014/10/typed-javascript.html">Statically typed JavaScript via Microsoft TypeScript, Facebook Flow and Google AtScript</a> by <a href="https://twitter.com/rauschma">@rauschma</a></li>
+            <li><a href="https://github.com/tonymorris/parametricity">Parametricity</a> by <a href="https://twitter.com/dibblego">@dibblego</a> (link to pdf not working anymore)</li>
+            <li><a href="https://docs.google.com/document/d/11YUzC-1d0V1-Q3V0fQ7KSit97HnZoKVygDxpWzEYW0U/mobilebasic">AtScript Primer</a></li>
+          </ul>
         </section>
 
         <section data-background="img/bg08.png" class="futurice-front1">
