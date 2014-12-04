@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Flow and static types for JavaScript</title>
+    <meta name="description" content="Conference headline">
+    <meta name="author" content="Your Name">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/futurice.css" id="theme">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <style>
+      li { height: auto; line-height: 1.4; margin-bottom: 0.5em !important; }
+      .align-center { text-align: center; }
+    </style>
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section data-background="img/bg01.png" class="futurice-front1">
+          <img class="futulogo" src="img/futulogo.png">
+          <h1>Flow</h1>
+          <p>and static types for JavaScript</p>
+          <p style="color: #aaa; margin-top: 1em;">Frontend Weeklies, 2014-12-05</p>
+        </section>
+
+        <section data-background="img/bg03.png" class="futurice-front1">
+          <h2 style="color:white">Background</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <ul>
+            <li>We are sloppy programmers</li>
+            <li>We work with weak types and language quirks</li>
+            <li>We rely on tools and conventions to keep our sanity</li>
+            <li>We hate writing documentation</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <p>Maintaining large JavaScript codebases takes effort</p>
+          <ul style="margin-top:1em">
+            <li>Lots of stupid unit tests</li>
+            <li>Extensive code reviews</li>
+            <li>Meticulous focus on conventions</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg03.png" class="futurice-front1">
+          <h2 style="color:white">Static Types</h2>
+          <p style="color:white">some options</p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Dart</h2>
+          <ul>
+            <li>OO</li>
+            <li>Optional static types</li>
+            <li>Checked/production mode to toggle runtime checking</li>
+            <li>Generics</li>
+            <li>Compile to JS, run in Dartium, or use in Dart VM</li>
+            <li>Futures, Streams</li>
+            <li>async/await (!)</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>import 'dart:io';
+import 'dart:async';
+
+void printDailyNewsDigest() {
+  File file = new File("dailyNewsDigest.txt");
+  Future future = file.readAsString();
+  future.then((content) {
+    print(content);
+  });
+}</code></pre>
+          <p class="align-center"><a href="https://www.dartlang.org/docs/tutorials/futures/">www.dartlang.org/docs/tutorials/futures/</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>AtScript</h2>
+          <ul>
+            <li>Coming to AngularJS 2.0</li>
+            <li>Type annotations</li>
+            <li>Metadata annotations</li>
+            <li>Runtime type checking (DI needs it)</li>
+            <li>Compile to ES5 or Dart</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>@Component({selector: 'foo'})
+class MyComponent {
+  @Inject()
+  constructor(server:Server) {}
+}</code></pre>
+          <p class="align-center"><a href="http://www.2ality.com/2014/10/typed-javascript.html">www.2ality.com/2014/10/typed-javascript.html</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>TypeScript</h2>
+          <ul>
+            <li>JavaScript superset (aiming to be superset of ES6 in 2.0)</li>
+            <li>(Optional) type annotations</li>
+            <li>Generics</li>
+            <li>Interfaces/structural types</li>
+            <li>OO stuff</li>
+            <li>Compile time type checking</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code class="typescript">interface Person {
+    firstname: string;
+    lastname: string;
+}
+
+function greeter(person : Person) {
+    return "Hello, " + person.firstname + " " + person.lastname;
+}
+
+var user = {firstname: "Jane", lastname: "User"};
+
+document.body.innerHTML = greeter(user);</code></pre>
+          <p class="align-center"><a href="http://www.typescriptlang.org/Tutorial">www.typescriptlang.org/Tutorial</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>.d.ts files</h2>
+          <pre><code class="typescript">declare module Rx {
+  export interface Observable&lt;T&gt; {
+    (dueTime: Date, scheduler?: IScheduler): Observable&lt;T&gt;;
+    delay(dueTime: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    throttle(dueTime: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeInterval(scheduler?: IScheduler): Observable&lt;TimeInterval&lt;T&gt;&gt;;
+    timestamp(scheduler?: IScheduler): Observable&lt;Timestamp&lt;T&gt;&gt;;
+    sample(interval: number, scheduler?: IScheduler): Observable&lt;T&gt;;
+    sample&lt;TSample&gt;(sampler: Observable&lt;TSample&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeout(dueTime: Date, other?: Observable&lt;T&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+    timeout(dueTime: number, other?: Observable&lt;T&gt;, scheduler?: IScheduler): Observable&lt;T&gt;;
+  }
+}</code></pre>
+          <p class="align-center"><a href="http://definitelytyped.org/">definitelytyped.org</a></p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <blockquote cite="http://baishakhir.github.io/uploads/fse2014-lang_study.pdf">
+            "However, in practice, we notice that developers often—for
+             50% of all variables—use the `any` type, thus making
+             TypeScript dynamic and weak"
+          </blockquote>
+          <p style="text-align:center;font-size:0.8em">
+            <a href="http://baishakhir.github.io/uploads/fse2014-lang_study.pdf">baishakhir.github.io/uploads/fse2014-lang_study.pdf</a>
+          </p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>JavaScript type checker</li>
+            <li>Built in OCaml (Steve Yegge must be smiling)</li>
+            <li>Built to scale to large codebases</li>
+            <li>Focus on type inference</li>
+            <li>Gradual type system</li>
+            <li>jsx compiler used for type erasure (i.e. only compile time type checking)</li>
+            <li>Attempts to be close to the normal JS workflow</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>/* @flow */
+
+function foo(x) {
+  return x * 10;
+}
+
+foo('Hello, world!');</code></pre>
+          <pre><code>$> cd flow/examples/01_HelloWorld
+$> flow check</code></pre>
+          <pre><code>01_HelloWorld/hello.js:7:5,17: string
+This type is incompatible with
+  01_HelloWorld/hello.js:4:10,13: number</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Optional (except in module exports) TypeScript type annotations</li>
+            <li>Tuples</li>
+            <li>Structural types</li>
+            <li>Subtyping (extends, prototypes)</li>
+            <li>Polymorphic classes and function (generics)</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Union types</li>
+            <li>Maybe/nullable types</li>
+            <li>Declarations (not compatible with .d.ts files ATM)</li>
+            <li>Supports React's propTypes</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Generics</h2>
+          <pre><code>function id&lt;T&gt;(x: T): T {
+  return x;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+var o = null;
+print(o.x);</code></pre>
+          <pre><code>file.js:3:7,9: property x
+Property cannot be accessed on possibly null value
+  file.js:2:9,12: null</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+
+function length(x) {
+  return x.length;
+}
+
+var total = length('Hello') + length(null);</code></pre>
+          <pre><code>03_Null/nulls.js:4:10,17: property length
+Property cannot be accessed on possibly null value
+  03_Null/nulls.js:7:38,41: null</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Maybe Types</h2>
+          <pre><code>/* @flow */
+
+function length(x) {
+  if (x !== null) {
+    return x.length;
+  } else {
+    return 0;
+  }
+}
+
+var total = length('Hello') + length(null);</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Flow</h2>
+          <ul>
+            <li>Think of it as next generation linter</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>declare class Promise {
+    constructor(callback);
+    then(onFulfill, onReject);
+    catch(onReject);
+    static cast(object);
+    static resolve(object);
+    static reject(error);
+    static all(promises);
+    static race(promises);
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>declare class Promise&lt;R&gt; {
+    constructor(callback: (resolve : (result: R) =&gt; void, reject: (error: any) =&gt; void) =&gt; void): void;
+    then&lt;U&gt;(onFulfill?: (value: R) =&gt; Promise&lt;U&gt; | U, onReject?: (error: any) =&gt; Promise&lt;U&gt; | U): Promise&lt;U&gt;;
+    catch&lt;U&gt;(onReject?: (error: any) =&gt; U): Promise&lt;U&gt;;
+    static cast&lt;T&gt;(object?: T): Promise&lt;T&gt;;
+    static resolve&lt;T&gt;(object?: T): Promise&lt;T&gt;;
+    static reject(error?: any): Promise&lt;any&gt;;
+    static all&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;Array&lt;T&gt;&gt;;
+    static race&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt;;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+        </section>
+
+        <section data-background="img/bg04.png" class="futurice-front1">
+          <h2>Your headline</h2>
+        </section>
+
+        <section data-background="img/bg05.png" class="futurice-front1">
+          <h2 style="color:white">Your headline</h2>
+        </section>
+
+        <section data-background="img/bg06.png" class="futurice-front1">
+          <h2 style="color:white">Your headline</h2>
+        </section>
+
+        <section data-background="img/bg07.png" class="futurice-front1">
+          <h2 style="color:white">Your headline</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Summary</h2>
+          <ul>
+            <li>Early warnings are good</li>
+            <li>Static types help in maintaining and refactoring code</li>
+            <li>Up-to-date documentation</li>
+            <li>Avoiding stupid unit tests</li>
+            <li>Good type inference is crucial for adoption</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Future</h2>
+          <ul>
+            <li>Linting taken to the next level</li>
+            <li>Optional type annotations are considered for ES7, but introducing them is very difficult</li>
+            <li>AtScript, TypeScript, and Flow developers are working together \o/</li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="https://www.dartlang.org/">www.dartlang.org</a></li>
+            <li><a href="http://www.typescriptlang.org/">www.typescriptlang.org</a></li>
+            <li><a href="http://flowtype.org/">http://flowtype.org/</a></li>
+            <li><a href="http://www.2ality.com/2014/10/typed-javascript.html">Statically typed JavaScript via Microsoft TypeScript, Facebook Flow and Google AtScript</a> by <a href="https://twitter.com/rauschma">@rauschma</a></li>
+            <li><a href="https://github.com/tonymorris/parametricity">Parametricity</a> by <a href="https://twitter.com/dibblego">@dibblego</a> (link to pdf not working anymore)</li>
+            <li><a href="https://docs.google.com/document/d/11YUzC-1d0V1-Q3V0fQ7KSit97HnZoKVygDxpWzEYW0U/mobilebasic">AtScript Primer</a></li>
+          </ul>
+        </section>
+
+        <section data-background="img/bg08.png" class="futurice-front1">
+          <h2 class="align-center"style="color:white">Thanks!</h2>
+          <p class="align-center"><a href="https://twitter.com/kpuputti">@kpuputti</a></p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'linear',
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          //{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          //{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>
