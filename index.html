@@ -66,22 +66,52 @@
 
         <section data-background="img/bg03.png" class="futurice-front1">
           <h2 style="color:white">Static Types</h2>
+          <p style="color:white">some options</p>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
           <h2>Dart</h2>
           <ul>
-            <li></li>
-            <li><a href="https://www.dartlang.org/">dartlang.org</a></li>
+            <li>OO</li>
+            <li>Optional static types</li>
+            <li>Checked/Production mode to toggle runtime checking</li>
+            <li>Generics</li>
+            <li>Compile to JS, run in Dartium, or use Dart VM</li>
+            <li>Futures, Streams</li>
+            <li>async/await (!)</li>
           </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>import 'dart:io';
+import 'dart:async';
+
+void printDailyNewsDigest() {
+  File file = new File("dailyNewsDigest.txt");
+  Future future = file.readAsString();
+  future.then((content) {
+    print(content);
+  });
+}</code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
           <h2>AtScript</h2>
           <ul>
-            <li></li>
-            <li><a href=""></a></li>
+            <li>Coming to AngularJS 2.0</li>
+            <li>Type annotations</li>
+            <li>Metadata annotations</li>
+            <li>Runtime type checking (DI needs it)</li>
+            <li>Compile to ES5 or Dart</li>
           </ul>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>@Component({selector: 'foo'})
+class MyComponent {
+  @Inject()
+  constructor(server:Server) {}
+}</code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
@@ -92,13 +122,12 @@
             <li>Generics</li>
             <li>Interfaces/structural types</li>
             <li>OO stuff</li>
-            <li>.d.ts files</li>
+            <li>Compile time type checking</li>
           </ul>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
-          <pre><code class="typescript">
-interface Person {
+          <pre><code class="typescript">interface Person {
     firstname: string;
     lastname: string;
 }
