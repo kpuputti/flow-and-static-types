@@ -277,7 +277,29 @@ var total = length('Hello') + length(null);</code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
-          <pre><code></code></pre>
+          <pre><code>declare class Promise {
+    constructor(callback);
+    then(onFulfill, onReject);
+    catch(onReject);
+    static cast(object);
+    static resolve(object);
+    static reject(error);
+    static all(promises);
+    static race(promises);
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <pre><code>declare class Promise&lt;R&gt; {
+    constructor(callback: (resolve : (result: R) =&gt; void, reject: (error: any) =&gt; void) =&gt; void): void;
+    then&lt;U&gt;(onFulfill?: (value: R) =&gt; Promise&lt;U&gt; | U, onReject?: (error: any) =&gt; Promise&lt;U&gt; | U): Promise&lt;U&gt;;
+    catch&lt;U&gt;(onReject?: (error: any) =&gt; U): Promise&lt;U&gt;;
+    static cast&lt;T&gt;(object?: T): Promise&lt;T&gt;;
+    static resolve&lt;T&gt;(object?: T): Promise&lt;T&gt;;
+    static reject(error?: any): Promise&lt;any&gt;;
+    static all&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;Array&lt;T&gt;&gt;;
+    static race&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt;;
+}</code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
