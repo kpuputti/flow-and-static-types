@@ -1,4 +1,3 @@
-Futurice Reveal.js template
-===========================
+# Presentation: Flow and static types for JavaScript
 
-According to the new branding guidelines.
+See [http://kpuputti.github.io/flow-and-static-types/](http://kpuputti.github.io/flow-and-static-types/)
