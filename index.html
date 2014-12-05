@@ -87,7 +87,7 @@
             <li>Generics</li>
             <li>Compile to JS, run in Dartium, or use in Dart VM</li>
             <li>Futures, Streams</li>
-            <li>async/await (!)</li>
+            <li>async/await (also coming to ES7, see Scala/C# for examples)</li>
           </ul>
         </section>
 
@@ -217,7 +217,7 @@ This type is incompatible with
             <li>Tuples</li>
             <li>Structural types</li>
             <li>Subtyping (extends, prototypes)</li>
-            <li>Polymorphic classes and function (generics)</li>
+            <li>Polymorphic classes and functions (generics)</li>
           </ul>
         </section>
 
@@ -225,7 +225,7 @@ This type is incompatible with
           <h2>Flow</h2>
           <ul>
             <li>Union types</li>
-            <li>Maybe/nullable types</li>
+            <li>Maybe types (nullable types)</li>
             <li>Declarations (not compatible with .d.ts files ATM)</li>
             <li>Supports React's propTypes</li>
           </ul>
@@ -233,9 +233,17 @@ This type is incompatible with
 
         <section data-background="img/bg02.png" class="futurice-front1">
           <h2>Generics</h2>
+          <pre><code>function id(x) {
+  return x;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Generics</h2>
           <pre><code>function id&lt;T&gt;(x: T): T {
   return x;
 }</code></pre>
+          <p class="align-center">See <a href="https://github.com/tonymorris/parametricity">Parametricity</a> by <a href="https://twitter.com/dibblego">@dibblego</a> for an explanation why generic functions are awesome</p>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
@@ -277,14 +285,12 @@ function length(x) {
 var total = length('Hello') + length(null);</code></pre>
         </section>
 
-        <section data-background="img/bg02.png" class="futurice-front1">
-          <h2>Flow</h2>
-          <ul>
-            <li>Think of it as next generation linter</li>
-          </ul>
+        <section data-background="img/bg03.png" class="futurice-front1">
+          <h2>Example: ES6 Promises</h2>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>The API</h2>
           <pre><code>declare class Promise {
     constructor(callback);
     then(onFulfill, onReject);
@@ -298,9 +304,49 @@ var total = length('Hello') + length(null);</code></pre>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Let's add some annotations</h2>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Generics</h2>
           <pre><code>declare class Promise&lt;R&gt; {
-    constructor(callback: (resolve : (result: R) =&gt; void, reject: (error: any) =&gt; void) =&gt; void): void;
-    then&lt;U&gt;(onFulfill?: (value: R) =&gt; Promise&lt;U&gt; | U, onReject?: (error: any) =&gt; Promise&lt;U&gt; | U): Promise&lt;U&gt;;
+    constructor(callback): void; // void instead of Promise&lt;R&gt; in Flow core?
+    then&lt;U&gt;(onFulfill, onReject): Promise&lt;U&gt;;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Functions</h2>
+          <pre><code>declare class Promise&lt;R&gt; {
+    constructor(callback: (resolve: (result: R) =&gt; void,
+                           reject: (error: any) =&gt; void) =&gt; void): void;
+                           // why any instead of Error in Flow core?
+
+    then&lt;U&gt;(onFulfill, onReject): Promise&lt;U&gt;;
+}</code></pre>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Union types</h2>
+          <pre><code>declare class Promise&lt;R&gt; {
+    constructor(callback: (resolve: (result: R) =&gt; void,
+                           reject: (error: any) =&gt; void) =&gt; void): void;
+
+    then&lt;U&gt;(onFulfill?: (value: R) =&gt; Promise&lt;U&gt; | U,
+            onReject?: (error: any) =&gt; Promise&lt;U&gt; | U): Promise&lt;U&gt;;
+}</code></pre>
+          <p class="align-center">Note map vs. monadic bind (flatMap) in the then handler!</p>
+        </section>
+
+        <section data-background="img/bg02.png" class="futurice-front1">
+          <h2>Full annotated API</h2>
+          <pre><code>declare class Promise&lt;R&gt; {
+    constructor(callback: (resolve: (result: R) =&gt; void,
+                           reject: (error: any) =&gt; void) =&gt; void): void;
+
+    then&lt;U&gt;(onFulfill?: (value: R) =&gt; Promise&lt;U&gt; | U,
+            onReject?: (error: any) =&gt; Promise&lt;U&gt; | U): Promise&lt;U&gt;;
+
     catch&lt;U&gt;(onReject?: (error: any) =&gt; U): Promise&lt;U&gt;;
     static cast&lt;T&gt;(object?: T): Promise&lt;T&gt;;
     static resolve&lt;T&gt;(object?: T): Promise&lt;T&gt;;
@@ -308,31 +354,7 @@ var total = length('Hello') + length(null);</code></pre>
     static all&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;Array&lt;T&gt;&gt;;
     static race&lt;T&gt;(promises: Array&lt;Promise&lt;T&gt;&gt;): Promise&lt;T&gt;;
 }</code></pre>
-        </section>
-
-        <section data-background="img/bg02.png" class="futurice-front1">
-        </section>
-
-        <section data-background="img/bg02.png" class="futurice-front1">
-        </section>
-
-        <section data-background="img/bg02.png" class="futurice-front1">
-        </section>
-
-        <section data-background="img/bg04.png" class="futurice-front1">
-          <h2>Your headline</h2>
-        </section>
-
-        <section data-background="img/bg05.png" class="futurice-front1">
-          <h2 style="color:white">Your headline</h2>
-        </section>
-
-        <section data-background="img/bg06.png" class="futurice-front1">
-          <h2 style="color:white">Your headline</h2>
-        </section>
-
-        <section data-background="img/bg07.png" class="futurice-front1">
-          <h2 style="color:white">Your headline</h2>
+          <p class="align-center"><a href="https://github.com/facebook/flow/blob/master/lib/core.js">github.com/facebook/flow/blob/master/lib/core.js</a></p>
         </section>
 
         <section data-background="img/bg02.png" class="futurice-front1">
